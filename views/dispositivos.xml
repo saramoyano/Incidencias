@@ -1,0 +1,106 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="examen_ut3_dispositivo_tree">
+            <field name="name">examen_ut3.dispositivo.tree</field>
+            <field name="model">examen_ut3.dispositivo</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="ubicacion_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="examen_ut3_dispositivo_form">
+            <field name="name">examen_ut3.dispositivo.form</field>
+            <field name="model">examen_ut3.dispositivo</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="image" widget="image" class="oe_avatar"/>
+                        <field name="name" required="1"/>
+                        <field name="ubicacion_id"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Descripcion">
+                            <field name="description"/>
+                        </page>
+                        <page string="Incidencias">
+                            <field name="incidencia_ids" context="{'default_dispositivo_id' : active_id}"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="examen_ut3_dispositivo_search">
+            <field name="name">examen_ut3.dispositivo.search</field>
+            <field name="model">examen_ut3.dispositivo</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <group string="Agrupar por">
+                        <filter name="por_ubicacion" string="Ubicacion" context="{'group_by':'ubicacion_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="examen_ut3_dispositivo_kanban">
+            <field name="name">examen_ut3.dispositivo.kanban</field>
+            <field name="model">examen_ut3.dispositivo</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="image"/>
+                    <field name="ubicacion_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_module_vignette oe_kanban_global_click">
+                                <img t-attf-src="kanban_image{'examen_ut3.dispositivo', 'image', record.icon.value}"
+                                     class="oe_module_icon"/>
+                                <div class="oe_module_desc">
+                                    <h4 class="o_kanban_record_title">
+                                        <field name="name"/>
+                                       </h4>
+                                      <p class="oe_module_name">
+                                        <field name="ubicacion_id"/>
+                                      </p>
+                                    <div class="oe_module_action">
+                                        <button class="btn btn-primary btn-sm" type="edit">Editar</button>
+                                        <button class="btn btn-primary btn-sm" type="delete">Borrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="examen_ut3_dispositivo_graph">
+            <field name="name">examen_ut3.dispositivo.graph</field>
+            <field name="model">examen_ut3.dispositivo</field>
+            <field name="arch" type="xml">
+                <graph string="Incidencias por dispositivo">
+                    <field name="name"/>
+                    <field name="num_incidencias" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="examen_ut3.dispositivo_action_window">
+            <field name="name">Dispositivos</field>
+            <field name="res_model">examen_ut3.dispositivo</field>
+            <field name="view_mode">kanban,tree,form,search,graph</field>
+            <field name="context" eval="{'search_default_estado_bueno':1}"/>
+        </record>
+
+
+    </data>
+</odoo>

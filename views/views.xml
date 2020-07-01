@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="examen_ut3.list">
+      <field name="name">ExamenUT3 list</field>
+      <field name="model">examen_ut3.examen_ut3</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="examen_ut3.action_window">
+      <field name="name">ExamenUT3 window</field>
+      <field name="res_model">examen_ut3.examen_ut3</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="examen_ut3.action_server">
+      <field name="name">ExamenUT3 server</field>
+      <field name="model_id" ref="model_examen_ut3_examen_ut3"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+
+    <menuitem name="Incidencias" id="examen_ut3.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Incidencias" id="examen_ut3.menu_1" parent="examen_ut3.menu_root" action="examen_ut3.incidencia_action_window"/>
+    <menuitem name="Maestros" id="examen_ut3.menu_2" parent="examen_ut3.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Ubicaciones" id="examen_ut3.menu_2_list" parent="examen_ut3.menu_2" action="examen_ut3.ubicacion_action_window"/>
+    <menuitem name="Dispositivos" id="examen_ut3.menu_3_list" parent="examen_ut3.menu_2" action="examen_ut3.dispositivo_action_window"/>
+             <!---->
+
+  </data>
+</odoo>

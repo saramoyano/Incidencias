@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="examen_ut3_ubicacion_tree">
+      <field name="name">examen_ut3.ubicacion.tree</field>
+      <field name="model">examen_ut3.ubicacion</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+         <record model="ir.ui.view" id="examen_ut3_ubicacion_form">
+      <field name="name">examen_ut3.ubicacion.form</field>
+      <field name="model">examen_ut3.ubicacion</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name" string="Nombre" required="1"/>
+          </group>
+
+
+          <notebook colspan="4">
+            <page string="Descripcion">
+                     <field name="description"/>
+            </page>
+            <page string="Dispositivos">
+              <field name="dispositivo_ids" context="{'default_ubicacion_id' : active_id}">
+                <tree editable="bottom">
+                   <field name="name"/>
+                   <field name="ubicacion_id" invisible="1"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="examen_ut3.ubicacion_action_window">
+      <field name="name">Ubicacion</field>
+      <field name="res_model">examen_ut3.ubicacion</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    </data>
+</odoo>

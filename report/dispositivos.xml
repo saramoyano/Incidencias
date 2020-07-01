@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+
+        <report
+            id="examenut3.dispositivosreport"
+        model="examen_ut3.dispositivo"
+        string="Dispositivos"
+        name="examen_ut3.report_dispositivo_view"
+        file="examen_ut3.report_dispositivo_view"
+        report_type="qweb-pdf"/>
+
+
+        <template id="report_dispositivo_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2 t-field="doc.name"></h2>
+<!--                            <h3 t-field="doc.incidencias"></h3>-->
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,121 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="examen_ut3_incidencia_tree">
+            <field name="name">examen_ut3.incidencia.tree</field>
+            <field name="model">examen_ut3.incidencia</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="cerrada == False">
+                    <field name="name"/>
+                    <field name="dispositivo_id"/>
+                    <field name="responsable"/>
+                    <field name="fecha_inicio"/>
+                    <field name="fecha_fin"/>
+                    <field name="cerrada" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="launch_incidencia_wizard_view">
+            <field name="name">Cerrar Incidencia</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="src_model">examen_ut3.incidencia</field>
+            <field name="res_model">examen_ut3.incidenciaswizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="examen_ut3_incidencia_form">
+            <field name="name">examen_ut3.incidencia.form</field>
+            <field name="model">examen_ut3.incidencia</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="%(launch_incidencia_wizard_view)d" type="action" string="Cerrar Incidencia"
+                                attrs="{'invisible': ['|',('cerrada', '=', True),('create_date', '=', False)]}" class="oe_highlight"/>
+                    </header>
+                    <group>
+                        <field name="create_date" invisible="1"/>
+                        <field name="ubicacion_id"/>
+                        <field name="dispositivo_id" domain="[('ubicacion_id', '=?', ubicacion_id)]"/>
+                        <field name="responsable"/>
+                        <field name="fecha_inicio"/>
+                        <field name="fecha_fin"
+                               attrs="{'invisible': [('cerrada', '=', False)], 'readonly': [('cerrada', '=', True)]}"/>
+                        <field name="description_fin"
+                               attrs="{'invisible': [('cerrada', '=', False)], 'readonly': [('cerrada', '=', True)]}"/>
+                        <field name="cerrada"
+                               attrs="{'invisible': [('cerrada', '=', False)], 'readonly': [('cerrada', '=', True)]}"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Descripcion">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="examen_ut3_incidencia_search">
+            <field name="name">examen_ut3.incidencia.search</field>
+            <field name="model">examen_ut3.incidencia</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="fecha_inicio"/>
+                    <field name="fecha_fin"/>
+                    <filter name="incidencias_abiertas" string="Incidencias abiertas" domain="[('cerrada', '=', False)]"/>
+                    <group string="Agrupar por">
+                        <filter name="por_dispositivo" string="Dispositivo" context="{'group_by':'dispositivo_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="examen_ut3_incidencia_calendar">
+            <field name="name">examen_ut3.incidencia.calendar</field>
+            <field name="model">examen_ut3.incidencia</field>
+            <field name="arch" type="xml">
+                <calendar string="Incidencias" mode="month" date_start="fecha_inicio" date_stop="fecha_fin"
+                          color="responsable">
+                    <field name="name"/>
+                    <field name="dispositivo_id"/>
+                    <field name="description_fin"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="examen_ut3_incidencia_wizard_view">
+            <field name="name">Wizard Incidencias</field>
+            <field name="model">examen_ut3.incidenciaswizard</field>
+            <field name="arch" type="xml">
+                <form string="Cerrar Incidencias">
+                    <group>
+                        <field name="incidencia_id" invisible="1"/>
+                        <field name="fecha_inicio" readonly="1"/>
+                        <field name="fecha_fin"/>
+                        <field name="cerrada"/>
+                        <field name="description_fin"/>
+                    </group>
+                    <footer>
+                        <button name="cerrar_incidencia" type="object" string="Cerrar Incidencia" class="oe_highlight"/>
+                        <button special="cancel" string="Cancelar"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="examen_ut3.incidencia_action_window">
+            <field name="name">Incidencias</field>
+            <field name="res_model">examen_ut3.incidencia</field>
+            <field name="view_mode">tree,form,search,calendar</field>
+            <field name="context" eval="{'search_default_incidencias_abiertas':1}"/>
+        </record>
+
+    </data>
+</odoo>
